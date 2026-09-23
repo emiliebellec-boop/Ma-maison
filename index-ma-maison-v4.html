@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#a96bf3">
+<link rel="apple-touch-icon" href="icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Ma Maison"><title>Ma Maison</title>
+<style>
+:root{--ink:#352b46;--muted:#7c718d;--purple:#9667e8;--pink:#ff79ad;--blue:#6bb9ff;--mint:#6fd7b7;--yellow:#ffd66b;--red:#e75d83;--card:#fff;--line:#eee5f6;--shadow:0 10px 26px rgba(78,48,110,.11)}
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:radial-gradient(circle at 5% 0,#ffe0ee 0 8%,transparent 24%),radial-gradient(circle at 100% 4%,#e6ddff 0 10%,transparent 25%),linear-gradient(180deg,#fff7fc,#f7f5ff 52%,#f1fbff);min-height:100vh}
+header{max-width:880px;margin:auto;padding:22px 16px 10px}h1{font-size:32px;margin:0}header p{margin:5px 0;color:var(--muted);font-weight:600}
+nav{position:sticky;top:0;z-index:5;display:flex;gap:7px;overflow:auto;padding:10px 12px;background:#fff8fcdd;backdrop-filter:blur(14px);border-bottom:1px solid #eadff1}
+nav button{border:0;background:#fff;color:#78668d;padding:10px 13px;border-radius:999px;font-weight:800;white-space:nowrap;box-shadow:0 3px 10px #6b438010}nav button.active{color:#fff;background:linear-gradient(135deg,var(--pink),var(--purple))}
+main{max-width:880px;margin:auto;padding:14px 13px 90px}.panel{display:none}.panel.active{display:block}.card{background:#fffffff2;border:1px solid #eee4f5;border-radius:20px;padding:15px;margin-bottom:12px;box-shadow:var(--shadow)}
+.hero{background:linear-gradient(135deg,#fff,#fff5fb 45%,#f0eaff)}.row{display:flex;align-items:center;gap:9px}.between{justify-content:space-between}.wrap{flex-wrap:wrap}.note{font-size:13px;color:var(--muted)}
+.progress{height:13px;background:#eee8f5;border-radius:99px;overflow:hidden;margin-top:12px}.progress>div{height:100%;width:0;background:linear-gradient(90deg,var(--pink),var(--purple),var(--blue));border-radius:99px}
+.task{display:flex;gap:11px;align-items:flex-start;border-left:6px solid var(--purple)}.task[data-cat="Ménage"]{border-left-color:var(--pink)}.task[data-cat="Lessive"]{border-left-color:var(--blue)}.task[data-cat="Chats"]{border-left-color:var(--yellow)}.task[data-cat="Désencombrement"]{border-left-color:var(--mint)}.task[data-cat="Maison"]{border-left-color:var(--purple)}
+.task input[type=checkbox]{width:23px;height:23px;accent-color:var(--purple);margin-top:1px}.task.done{opacity:.65}.task.done .txt b{text-decoration:line-through}.txt{flex:1;min-width:0}.txt small{display:block;color:var(--muted);margin-top:4px}.tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}.tag{font-size:11px;font-weight:800;background:#f1eaff;color:#694c98;padding:4px 7px;border-radius:99px}.tag.time{background:#e9f5ff;color:#3c78a7}.tag.high{background:#ffe3ec;color:#b63e68}.tag.low{background:#e7f8f1;color:#34866d}.overdue{background:#ffe2ea;color:#ae3e63}
+.primary,.ghost,.danger,.chip{border:0;border-radius:12px;padding:10px 12px;font-weight:800}.primary{color:white;background:linear-gradient(135deg,var(--pink),var(--purple))}.ghost{background:#f0eaff;color:#65458f}.danger{background:#ffe4ec;color:#bc4268}.chip{background:white;color:#675778;box-shadow:0 3px 10px #6b438010}.chip.active{background:linear-gradient(135deg,var(--pink),var(--purple));color:white}.actions{display:flex;gap:5px}
+.section-title{font-size:19px;margin:20px 3px 9px}.empty{text-align:center;padding:26px;color:var(--muted)}.celebrate{text-align:center;padding:14px;border-radius:17px;background:linear-gradient(135deg,#ffe3ef,#eee6ff,#e2faf2);font-weight:900;margin-bottom:12px}
+.weekgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}.day{padding:9px 3px;text-align:center;background:white;border-radius:12px;font-size:11px;box-shadow:0 3px 10px #6b438010}.day b{display:block;font-size:16px}.day.today{color:white;background:linear-gradient(145deg,var(--pink),var(--purple))}
+form{display:grid;gap:10px}.two{display:grid;grid-template-columns:1fr 1fr;gap:9px}input[type=text],input[type=date],input[type=number],select,textarea{width:100%;border:2px solid #eee5f5;background:#fff;border-radius:13px;padding:11px;font-size:16px;color:var(--ink)}textarea{min-height:70px;resize:vertical}
+.week-select{display:flex;gap:7px;overflow:auto}.week-select button{min-width:46px;border:0;border-radius:12px;padding:10px;background:#f0eaff;font-weight:800;color:#684b96}.week-select button.active{background:linear-gradient(135deg,var(--pink),var(--purple));color:#fff}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stat{text-align:center;background:white;border-radius:15px;padding:12px 6px}.stat b{display:block;font-size:21px}.calendar-list h3{margin:17px 4px 7px}.footer{text-align:center;color:var(--muted);font-size:12px;margin-top:24px}
+@media(max-width:560px){.two{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr 1fr}.weekgrid{gap:3px}.day{font-size:9px}.day b{font-size:14px}h1{font-size:30px}}
+</style></head><body>
+<header><h1>🌈 Ma Maison ✨</h1><p id="dateLabel"></p></header>
+<nav id="nav"><button data-tab="today" class="active">☀️ Aujourd’hui</button><button data-tab="week">📅 Semaine</button><button data-tab="calendar">🗓️ Calendrier</button><button data-tab="routines">🔁 Routines</button><button data-tab="declutter">📦 Désencombrement</button></nav>
+<main>
+<section id="today" class="panel active">
+ <div class="card hero"><div class="row between wrap"><div><b id="hello">Bonjour ☀️</b><div class="note" id="summary"></div></div><div class="row"><button id="normalBtn" class="chip active">☀️ Normal</button><button id="expressBtn" class="chip">⚡ Express 15 min</button></div></div><div class="progress"><div id="progressBar"></div></div><div class="note" id="progressText" style="margin-top:7px"></div></div>
+ <div id="celebrate"></div><div id="todayTasks"></div>
+ <div class="card"><div class="row between"><div><b>🎲 Une petite tâche bonus ?</b><div class="note">Quand tu as encore 10 minutes.</div></div><button class="ghost" id="bonusBtn">Choisir</button></div><div id="bonusResult"></div></div>
+</section>
+<section id="week" class="panel"><div class="weekgrid" id="weekGrid"></div><div class="card"><div class="stats"><div class="stat"><b id="weekPct">0%</b><span class="note">réalisé</span></div><div class="stat"><b id="weekDone">0</b><span class="note">tâches</span></div><div class="stat"><b id="routineDays">0/7</b><span class="note">jours actifs</span></div></div></div><h2 class="section-title">Cette semaine</h2><div id="weekTasks"></div></section>
+<section id="calendar" class="panel"><div class="card"><b>🗓️ Les 14 prochains jours</b><div class="note">Tes routines et tâches ponctuelles à venir.</div></div><div id="calendarList" class="calendar-list"></div></section>
+<section id="routines" class="panel">
+ <div class="card"><h2 style="margin-top:0">➕ Ajouter une tâche</h2><form id="addForm">
+ <input id="taskName" type="text" placeholder="Ex. Nettoyer le frigo" required>
+ <div class="two"><select id="taskCategory"><option>Ménage</option><option>Lessive</option><option>Chats</option><option>Maison</option><option>Autre</option></select><select id="taskFrequency"><option value="once">Ponctuelle</option><option value="daily">Tous les jours</option><option value="weekly">Chaque semaine</option></select></div>
+ <div class="two"><select id="taskDay"><option value="0">Dimanche</option><option value="1">Lundi</option><option value="2">Mardi</option><option value="3">Mercredi</option><option value="4">Jeudi</option><option value="5">Vendredi</option><option value="6">Samedi</option></select><input id="taskDate" type="date"></div>
+ <div class="two"><select id="taskPriority"><option value="high">Essentiel</option><option value="normal" selected>Normal</option><option value="low">Bonus</option></select><input id="taskMinutes" type="number" min="1" max="240" value="10" placeholder="Minutes"></div>
+ <textarea id="taskNote" placeholder="Note facultative…"></textarea><button class="primary" type="submit">Ajouter la tâche</button></form></div>
+ <h2 class="section-title">Mes routines</h2><div id="routineList"></div>
+</section>
+<section id="declutter" class="panel"><div class="card"><b>📦 Programme sur 6 semaines</b><div class="note">Le fonctionnement du cycle reste inchangé : choisis ta semaine.</div><div class="week-select" id="weekSelect"></div></div><div id="declutterList"></div></section>
+<div class="footer">💾 Données enregistrées sur cet appareil dans Safari.</div></main>
+<script>
+const DAYS=['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
+const meta=[
+['Rangement express + litières (ramassage)','Chats','daily',null,10,'high','Ramassage rapide des litières.'],
+['Vaisselle / cuisine remise à zéro','Ménage','daily',null,10,'high','Plan de travail et vaisselle.'],
+['Nettoyage complet des litières','Chats','weekly',1,15,'high','Nettoyage complet du lundi.'],
+['Sortir les poubelles noires','Maison','weekly',1,5,'high',''],
+['Chambres : rangement, poussière, aspirateur','Ménage','weekly',1,25,'normal',''],
+['Aspirateur couloirs + escaliers','Ménage','weekly',1,10,'normal',''],
+['Lessive vêtements','Lessive','weekly',1,5,'normal',''],
+['Cuisine : plaques, évier, crédence, plan de travail + sol','Ménage','weekly',2,25,'normal',''],
+['Salle de bain + WC complet','Ménage','weekly',3,30,'high',''],
+['Serviettes + tapis de bain','Lessive','weekly',3,5,'normal',''],
+['Salon + entrée : rangement, poussière, canapé + aspirateur','Ménage','weekly',4,25,'normal',''],
+['Aspirateur toute la maison + couloirs + escaliers','Ménage','weekly',5,30,'high',''],
+['Lavage des sols','Ménage','weekly',5,20,'normal',''],
+['Torchons + lavettes','Lessive','weekly',6,5,'normal',''],
+['Ménage approfondi en rotation','Ménage','weekly',6,30,'low',''],
+['Sortir les poubelles de recyclage','Maison','weekly',0,5,'high','']
+];
+const base=meta.map((x,i)=>({id:'b'+i,name:x[0],cat:x[1],freq:x[2],day:x[3],minutes:x[4],priority:x[5],note:x[6]}));
+const declutter={1:['Entrée + chaussures sous escalier','Kallax 8 : papiers administratifs','Kallax 8 : papeterie','Kallax 8 : verres + autres cases','Meuble TV haut','Meuble TV bas : DVD + consoles','Kallax 4 + table basse'],2:['Tiroirs cuisine 1–2','Tiroirs cuisine 3–4','Tiroirs cuisine 5–6','Placards hauts','Placard bas + sous-évier','Grande étagère au-dessus du four/frigo','Vérification + évacuation des dons'],3:['Penderie chambre 1','Étagères chambre 1','Commode : moitié 1','Commode : moitié 2','Chaussures / accessoires','Dessus et dessous des meubles','Finition + sacs de dons'],4:['Chambre 2 : bureau','Chambre 2 : clic-clac + autour','Salle de bain : produits / stock','Chambre 3 : première zone','Chambre 3 : deuxième zone','Objets restants des chambres','Finitions + dons'],5:['2e étage : zone 1','2e étage : zone 2','2e étage : zone 3','2e étage : zone 4','Objets stockés « au cas où »','Gros tri / objets volumineux','Réorganisation finale'],6:['Garage : placard haut 1','Garage : placard haut 2','Garage : grande étagère 1','Garage : grande étagère 2','Garage : grande étagère 3','Garage : 2 meubles à étagères ouvertes','Garage : volumineux + sol + organisation finale']};
+const bonus=['Nettoyer 1 étagère du frigo','Faire 1 tiroir de cuisine','Dépoussiérer les plinthes d’une pièce','Nettoyer 3 interrupteurs et poignées','Trier 10 papiers','Ranger une petite surface','Dépoussiérer sous le canapé','Faire un mini-tri de 10 objets'];
+const load=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}},save=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+let custom=load('mm_custom',[]),done=load('mm_done',{}),currentWeek=load('mm_declutter_week',1),mode='normal';
+const iso=d=>{let x=new Date(d);x.setMinutes(x.getMinutes()-x.getTimezoneOffset());return x.toISOString().slice(0,10)},today=new Date();
+const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+document.getElementById('dateLabel').textContent=today.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+function key(t,d){return iso(d)+'|'+t.id}
+function declutterTaskFor(d){
+  const idx=(d.getDay()+6)%7;
+  const names=declutter[currentWeek]||[];
+  if(!names[idx]) return null;
+  return {id:'d'+currentWeek+'-'+idx,name:names[idx],cat:'Désencombrement',freq:'once',date:iso(d),minutes:idx>=5?45:25,priority:'normal',note:'Semaine '+currentWeek};
+}
+function tasksFor(d){
+  const regular=[...base,...custom].filter(t=>t.freq==='daily'||(t.freq==='weekly'&&t.day===d.getDay())||(t.freq==='once'&&t.date===iso(d)));
+  const dt=declutterTaskFor(d);
+  return dt?[...regular,dt]:regular;
+}
+function priLabel(p){return p==='high'?'⭐ Essentiel':p==='low'?'✨ Bonus':'Normal'}
+function taskHTML(t,d,remove=false,extra=''){let k=key(t,d),ck=!!done[k],cat=t.cat||'Tâche',mins=+(t.minutes||10),p=t.priority||'normal';return `<div class="card task ${ck?'done':''}" data-cat="${esc(cat)}"><input type="checkbox" ${ck?'checked':''} onchange="toggleDone('${k}')"><div class="txt"><b>${esc(t.name)}</b><small>${esc(cat)}${t.note?' · '+esc(t.note):''}</small><div class="tags"><span class="tag time">⏱ ${mins} min</span><span class="tag ${p}">${priLabel(p)}</span>${extra}</div></div>${remove&&t.custom?`<div class="actions"><button class="danger" onclick="removeTask('${t.id}')">✕</button></div>`:''}</div>`}
+window.toggleDone=k=>{done[k]=!done[k];save('mm_done',done);render()};window.removeTask=id=>{custom=custom.filter(t=>t.id!==id);save('mm_custom',custom);render()};
+function previousDays(n=14){let a=[];for(let i=1;i<=n;i++){let d=new Date(today);d.setDate(d.getDate()-i);a.push(d)}return a}
+function overdue(){let seen=new Set(),a=[];for(const d of previousDays()){for(const t of tasksFor(d)){let k=key(t,d);if(!done[k]&&!seen.has(t.id)){seen.add(t.id);a.push({t,d,k})}}}return a}
+function expressTasks(ts){let picked=[],sum=0;for(const t of [...ts].sort((a,b)=>(a.priority==='high'?-1:a.priority==='low'?1:0)-(b.priority==='high'?-1:b.priority==='low'?1:0))){let m=+(t.minutes||10);if(sum+m<=15||picked.length===0){picked.push(t);sum+=m}}return picked}
+function renderToday(){let scheduled=tasksFor(today),late=overdue(),shown=mode==='express'?expressTasks(scheduled):scheduled,el=document.getElementById('todayTasks'),html='';
+ if(mode==='normal'&&late.length){html+='<h2 class="section-title">⏰ En retard</h2>'+late.map(x=>taskHTML(x.t,x.d,false,'<span class="tag overdue">En retard</span>')).join('')}
+ html+=`<h2 class="section-title">${mode==='express'?'⚡ Priorités en 15 min':'☀️ Aujourd’hui'}</h2>`+(shown.length?shown.map(t=>taskHTML(t,today)).join(''):'<div class="empty">Rien de prévu 🎉</div>');el.innerHTML=html;
+ let relevant=mode==='express'?shown:scheduled,completed=relevant.filter(t=>done[key(t,today)]).length,total=relevant.length,p=total?Math.round(completed/total*100):100,mins=relevant.filter(t=>!done[key(t,today)]).reduce((s,t)=>s+(+(t.minutes||10)),0);
+ document.getElementById('summary').textContent=`${total} tâches · environ ${mins} min restantes`;document.getElementById('progressText').textContent=`${completed}/${total} tâches • ${p} %`;document.getElementById('progressBar').style.width=p+'%';document.getElementById('celebrate').innerHTML=(total&&completed===total)?'<div class="celebrate">🎉 Bravo ! Tout est fait pour ce mode aujourd’hui ✨</div>':'';
+}
+function mondayOf(d){let x=new Date(d),day=x.getDay();x.setDate(x.getDate()-(day===0?6:day-1));x.setHours(0,0,0,0);return x}
+function renderWeek(){let mon=mondayOf(today),grid='',all='',total=0,n=0,active=0;for(let i=0;i<7;i++){let d=new Date(mon);d.setDate(mon.getDate()+i);grid+=`<div class="day ${iso(d)===iso(today)?'today':''}"><b>${d.getDate()}</b>${DAYS[d.getDay()].slice(0,3)}</div>`;let ts=tasksFor(d);if(ts.length){let dn=ts.filter(t=>done[key(t,d)]).length;if(dn)active++;total+=ts.length;n+=dn;all+=`<h3>${DAYS[d.getDay()]} ${d.getDate()}</h3>`+ts.map(t=>taskHTML(t,d)).join('')}}document.getElementById('weekGrid').innerHTML=grid;document.getElementById('weekTasks').innerHTML=all;document.getElementById('weekPct').textContent=(total?Math.round(n/total*100):100)+'%';document.getElementById('weekDone').textContent=n;document.getElementById('routineDays').textContent=active+'/7'}
+function renderCalendar(){let h='';for(let i=0;i<14;i++){let d=new Date(today);d.setDate(d.getDate()+i);let ts=tasksFor(d);h+=`<h3>${DAYS[d.getDay()]} ${d.toLocaleDateString('fr-FR',{day:'numeric',month:'short'})}</h3>`+(ts.length?ts.map(t=>taskHTML(t,d)).join(''):'<div class="note">Aucune tâche</div>')}document.getElementById('calendarList').innerHTML=h}
+function renderRoutines(){document.getElementById('routineList').innerHTML=[...base,...custom].map(t=>taskHTML(t,today,!!t.custom)).join('')}
+function renderDeclutter(){let ws='';for(let i=1;i<=6;i++)ws+=`<button class="${i===currentWeek?'active':''}" onclick="setWeek(${i})">S${i}</button>`;document.getElementById('weekSelect').innerHTML=ws;let mon=mondayOf(today);document.getElementById('declutterList').innerHTML=declutter[currentWeek].map((name,i)=>{let d=new Date(mon);d.setDate(mon.getDate()+i);let t={id:'d'+currentWeek+'-'+i,name,cat:'Désencombrement',freq:'once',date:iso(d),minutes:i>=5?45:25,priority:'normal'};return `<h3>${DAYS[d.getDay()]}</h3>`+taskHTML(t,d)}).join('')}
+window.setWeek=n=>{currentWeek=n;save('mm_declutter_week',n);renderDeclutter()};function render(){renderToday();renderWeek();renderCalendar();renderRoutines();renderDeclutter()}render();
+document.getElementById('nav').onclick=e=>{if(e.target.tagName!=='BUTTON')return;document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));e.target.classList.add('active');document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.getElementById(e.target.dataset.tab).classList.add('active')};
+document.getElementById('normalBtn').onclick=()=>{mode='normal';normalBtn.classList.add('active');expressBtn.classList.remove('active');renderToday()};document.getElementById('expressBtn').onclick=()=>{mode='express';expressBtn.classList.add('active');normalBtn.classList.remove('active');renderToday()};
+document.getElementById('bonusBtn').onclick=()=>{let x=bonus[Math.floor(Math.random()*bonus.length)];document.getElementById('bonusResult').innerHTML=`<div class="celebrate" style="margin-top:12px">✨ ${esc(x)} · 10 min</div>`};
+const freq=document.getElementById('taskFrequency'),day=document.getElementById('taskDay'),date=document.getElementById('taskDate');function freqUI(){day.style.display=freq.value==='weekly'?'block':'none';date.style.display=freq.value==='once'?'block':'none';if(freq.value==='once'&&!date.value)date.value=iso(today)}freq.onchange=freqUI;freqUI();
+document.getElementById('addForm').onsubmit=e=>{e.preventDefault();let f=freq.value;custom.push({id:'c'+Date.now(),name:taskName.value.trim(),cat:taskCategory.value,freq:f,day:+day.value,date:f==='once'?date.value:undefined,priority:taskPriority.value,minutes:+taskMinutes.value||10,note:taskNote.value.trim(),custom:true});save('mm_custom',custom);e.target.reset();taskMinutes.value=10;freqUI();render()};
+</script></body></html>
